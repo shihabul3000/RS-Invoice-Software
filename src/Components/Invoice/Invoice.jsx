@@ -1,53 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Invoice.css";
 
 const Invoice = () => {
-  const [invoiceDate, setInvoiceDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [showSale, setShowSale] = useState(false);
+  const [showOffer1, setShowOffer1] = useState(false);
+  const [showOffer2, setShowOffer2] = useState(false);
+  const [showRemoveColumn, setShowRemoveColumn] = useState(false);
   const [products, setProducts] = useState([
-    { productName: "", color: "", imei: "", quantity: 1, unitPrice: 0 },
+    { id: 1, name: "Product 1", unitPrice: 10, quantity: 1 },
   ]);
-  const [showSale, setShowSale] = useState(true);
-  const [showOffer1, setShowOffer1] = useState(true);
-  const [showOffer2, setShowOffer2] = useState(true);
-  const [removeMode, setRemoveMode] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(10);
+  const [totalQuantity, setTotalQuantity] = useState(1);
 
-  const addProductRow = () => {
-    setProducts([
-      ...products,
-      { productName: "", color: "", imei: "", quantity: 1, unitPrice: 0 },
-    ]);
-  };
-
-  const removeSelectedProducts = () => {
-    setProducts(products.filter((product) => !product.selected));
-  };
-
-  const updateProduct = (index, field, value) => {
-    const updatedProducts = [...products];
-    updatedProducts[index][field] = value;
-    setProducts(updatedProducts);
-  };
-
-  const calculateTotals = () => {
+  // Automatically calculate totals whenever 'products' changes
+  useEffect(() => {
     let totalQuantity = 0;
     let totalPrice = 0;
     products.forEach((product) => {
-      totalQuantity += product.quantity;
-      totalPrice += product.quantity * product.unitPrice;
+      totalQuantity += parseInt(product.quantity) || 0;
+      totalPrice += parseFloat(product.unitPrice) * (parseInt(product.quantity) || 0);
     });
-    return { totalQuantity, totalPrice: totalPrice.toFixed(2) };
+    setTotalQuantity(totalQuantity);
+    setTotalPrice(totalPrice);
+  }, [products]);
+
+  const handleAddProduct = () => {
+    const newProduct = {
+      id: products.length + 1,
+      name: `Product ${products.length + 1}`,
+      unitPrice: 10,
+      quantity: 1,
+    };
+    setProducts([...products, newProduct]);
   };
 
-  const { totalQuantity, totalPrice } = calculateTotals();
+  const handleRemoveProduct = (id) => {
+    const updatedProducts = products.filter((product) => product.id !== id);
+    setProducts(updatedProducts);
+  };
 
-  const uniqueSalesOrderNo = `REQ_${new Date().toISOString().split("T")[0]}_${
-    Math.floor(Math.random() * 10000) + 1
-  }`;
+  const handleQuantityChange = (e, id) => {
+    const updatedProducts = products.map((product) =>
+      product.id === id
+        ? { ...product, quantity: parseInt(e.target.value) || 0 }
+        : product
+    );
+    setProducts(updatedProducts);
+  };
 
-  const handlePrint = () => {
-    window.print();
+  const handleUnitPriceChange = (e, id) => {
+    const updatedProducts = products.map((product) =>
+      product.id === id
+        ? { ...product, unitPrice: parseFloat(e.target.value) || 0 }
+        : product
+    );
+    setProducts(updatedProducts);
+  };
+
+  const toggleRemoveColumn = () => {
+    setShowRemoveColumn(!showRemoveColumn);
+  };
+
+  const handleOfferChange = (offer) => {
+    if (offer === "sale") {
+      setShowSale(!showSale);
+    } else if (offer === "offer1") {
+      setShowOffer1(!showOffer1);
+    } else if (offer === "offer2") {
+      setShowOffer2(!showOffer2);
+    }
   };
 
   return (
@@ -59,75 +80,40 @@ const Invoice = () => {
 
       <section className="customer-details">
         <div>
-          <p>
-            <strong>Customer`s Name:</strong> Usa
-          </p>
-          <p>
-            <strong>Mobile No:</strong> 17283333000
-          </p>
-          <p>
-            <strong>Email:</strong> info@usabd.com
-          </p>
-          <p>
-            <strong>Address:</strong> Motaleb Plaza, Dhaka, Bangladesh
-          </p>
+          <p><strong>Customer`s Name:</strong> Usa</p>
+          <p><strong>Mobile No:</strong> 17283333000</p>
+          <p><strong>Email:</strong> info@usabd.com</p>
+          <p><strong>Address:</strong> Motaleb Plaza, Dhaka, Bangladesh</p>
         </div>
         <div>
-          <p>
-            <strong>Invoice No.:</strong> 17
-          </p>
-          <p>
-            <strong>Invoice Date:</strong>{" "}
-            <input
-              type="date"
-              value={invoiceDate}
-              onChange={(e) => setInvoiceDate(e.target.value)}
-            />
-          </p>
-          <p>
-            <strong>Sales Order No.:</strong> {uniqueSalesOrderNo}
-          </p>
+          <p><strong>Invoice No.:</strong> 17</p>
+          <p><strong>Invoice Date:</strong> {new Date().toLocaleDateString()}</p>
+          <p><strong>Sales Order No.:</strong> REQ_2018_08_09</p>
+          <p><strong>Entry Date:</strong> 12-Aug-18</p>
         </div>
       </section>
 
       <section className="filters">
-        <label>
-          <input
-            type="checkbox"
-            checked={showSale}
-            onChange={(e) => setShowSale(e.target.checked)}
-          />{" "}
-          Show Sale
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={showOffer1}
-            onChange={(e) => setShowOffer1(e.target.checked)}
-          />{" "}
-          Show Offer 1
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={showOffer2}
-            onChange={(e) => setShowOffer2(e.target.checked)}
-          />{" "}
-          Show Offer 2
-        </label>
+        <button className="dropdown-btn">
+          Show Offers
+          <div className="dropdown-content">
+            <button onClick={() => handleOfferChange("sale")}>Show Sale</button>
+            <button onClick={() => handleOfferChange("offer1")}>Show Offer 1</button>
+            <button onClick={() => handleOfferChange("offer2")}>Show Offer 2</button>
+          </div>
+        </button>
+        <button className="remove-btn" onClick={toggleRemoveColumn}>Remove Product</button>
       </section>
 
-      <section className="table-section">
+      {/* Table Content */}
+      <div className="table-section">
         <table className="invoice-table">
           <thead>
             <tr>
-              {removeMode && <th>Select</th>}
-              <th>Sl #</th>
-              <th>Product Name</th>
-              <th>Color</th>
-              <th>IMEI</th>
-              <th>Quantity</th>
+              {showRemoveColumn && <th>Remove</th>}
+              <th>Product</th>
               <th>Unit Price</th>
+              <th>Quantity</th>
               {showSale && <th>Sale</th>}
               {showOffer1 && <th>Offer 1</th>}
               {showOffer2 && <th>Offer 2</th>}
@@ -135,99 +121,50 @@ const Invoice = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
-              <tr key={index}>
-                {removeMode && (
+            {products.map((product) => (
+              <tr key={product.id}>
+                {showRemoveColumn && (
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={product.selected || false}
-                      onChange={(e) =>
-                        updateProduct(index, "selected", e.target.checked)
-                      }
-                    />
+                    <button onClick={() => handleRemoveProduct(product.id)}>Remove</button>
                   </td>
                 )}
-                <td>{index + 1}</td>
-                <td>
-                  <input
-                    type="text"
-                    value={product.productName}
-                    onChange={(e) =>
-                      updateProduct(index, "productName", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    value={product.color}
-                    onChange={(e) =>
-                      updateProduct(index, "color", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    value={product.imei}
-                    onChange={(e) =>
-                      updateProduct(index, "imei", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <select
-                    value={product.quantity}
-                    onChange={(e) =>
-                      updateProduct(index, "quantity", parseInt(e.target.value))
-                    }
-                  >
-                    {Array.from({ length: 100 }, (_, i) => i + 1).map((num) => (
-                      <option key={num} value={num}>
-                        {num}
-                      </option>
-                    ))}
-                  </select>
-                </td>
+                <td>{product.name}</td>
                 <td>
                   <input
                     type="number"
                     value={product.unitPrice}
-                    onChange={(e) =>
-                      updateProduct(index, "unitPrice", parseFloat(e.target.value))
-                    }
+                    onChange={(e) => handleUnitPriceChange(e, product.id)}
                   />
                 </td>
-                {showSale && <td>Sale Details</td>}
-                {showOffer1 && <td>Offer 1 Details</td>}
-                {showOffer2 && <td>Offer 2 Details</td>}
-                <td>{(product.quantity * product.unitPrice).toFixed(2)}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={product.quantity}
+                    onChange={(e) => handleQuantityChange(e, product.id)}
+                  />
+                </td>
+                {showSale && <td>Sale Content</td>}
+                {showOffer1 && <td>Offer 1 Content</td>}
+                {showOffer2 && <td>Offer 2 Content</td>}
+                <td>{(product.unitPrice * product.quantity).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="totals">
-          <p>Total Quantity: {totalQuantity}</p>
-          <p>Total Price: {totalPrice}</p>
+          <div className="total-quantity">
+            <strong>Total Quantity: </strong>{totalQuantity}
+          </div>
+          <div className="total-price">
+            <strong>Total Price: </strong>${totalPrice.toFixed(2)}
+          </div>
         </div>
-        <button className="add-row-btn" onClick={addProductRow}>
-          Add Product
-        </button>
-        <button
-          className="remove-row-btn"
-          style={{ backgroundColor: "red" }}
-          onClick={() => {
-            if (removeMode) removeSelectedProducts();
-            setRemoveMode(!removeMode);
-          }}
-        >
-          {removeMode ? "Remove Selected" : "Remove Product"}
-        </button>
-        <button className="print-btn" onClick={handlePrint}>
-          Print Summary
-        </button>
-      </section>
+      </div>
+
+      <button className="add-row-btn" onClick={handleAddProduct}>
+        Add Product
+      </button>
+      <button className="summary-btn">View Summary Report</button>
     </div>
   );
 };
