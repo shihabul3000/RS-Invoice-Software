@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 import "./Invoice.css";
 
 const Invoice = () => {
@@ -34,8 +34,8 @@ const Invoice = () => {
   const handleAddProduct = () => {
     const newProduct = {
       id: products.length + 1,
-      name: `Product ${products.length + 1}`,
-      unitPrice: 10,
+      name: "", // Start with an empty string for the product name
+      unitPrice: 0,
       quantity: 1,
     };
     setProducts([...products, newProduct]);
@@ -59,6 +59,15 @@ const Invoice = () => {
     const updatedProducts = products.map((product) =>
       product.id === id
         ? { ...product, unitPrice: parseFloat(e.target.value) || 0 }
+        : product
+    );
+    setProducts(updatedProducts);
+  };
+
+  const handleProductNameChange = (e, id) => {
+    const updatedProducts = products.map((product) =>
+      product.id === id
+        ? { ...product, name: e.target.value }
         : product
     );
     setProducts(updatedProducts);
@@ -170,7 +179,14 @@ const Invoice = () => {
                     <button onClick={() => handleRemoveProduct(product.id)}>Remove</button>
                   </td>
                 )}
-                <td>{product.name}</td>
+                <td>
+                  <input
+                    type="text"
+                    value={product.name}
+                    onChange={(e) => handleProductNameChange(e, product.id)}
+                    placeholder="Enter product name"
+                  />
+                </td>
                 <td>
                   <input
                     type="number"
