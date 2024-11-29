@@ -53,10 +53,7 @@ const Invoice = () => {
 
   const handleQuantityChange = (e, id) => {
     const value = e.target.value;
-
-    // Update quantity to 0 if empty, or parse it to an integer if a valid number is entered
     const validValue = value === "" ? 0 : parseInt(value) || 0;
-
     const updatedProducts = products.map((product) =>
       product.id === id ? { ...product, quantity: validValue } : product
     );
@@ -99,6 +96,70 @@ const Invoice = () => {
 
   const handleInvoiceDateChange = (e) => setInvoiceDate(e.target.value);
   const handleEntryDateChange = (e) => setEntryDate(e.target.value);
+
+  const openSummaryReport = () => {
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Invoice Summary</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .summary { max-width: 800px; margin: 0 auto; }
+            h2 { text-align: center; }
+            .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            .invoice-table th, .invoice-table td { padding: 8px 12px; border: 1px solid #ddd; }
+            .invoice-table th { background-color: #f4f4f4; text-align: left; }
+            .total { font-size: 18px; font-weight: bold; }
+            .print-btn { display: block; width: 200px; margin: 20px auto; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+            .print-btn:hover { background-color: #45a049; }
+          </style>
+        </head>
+        <body>
+          <div class="summary">
+            <h2>Invoice Summary</h2>
+            <p><strong>Customer Name:</strong> ${customer.name}</p>
+            <p><strong>Mobile:</strong> ${customer.mobile}</p>
+            <p><strong>Email:</strong> ${customer.email}</p>
+            <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
+            <p><strong>Invoice Date:</strong> ${invoiceDate}</p>
+            <p><strong>Sales Order Number:</strong> ${salesOrderNumber}</p>
+            <p><strong>Entry Date:</strong> ${entryDate}</p>
+            
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Unit Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${products
+                  .map(
+                    (product) => `
+                    <tr>
+                      <td>${product.name}</td>
+                      <td>${product.unitPrice}</td>
+                      <td>${product.quantity}</td>
+                      <td>${(product.unitPrice * product.quantity).toFixed(2)}</td>
+                    </tr>`
+                  )
+                  .join("")}
+              </tbody>
+            </table>
+
+            <p class="total">Total Quantity: ${totalQuantity}</p>
+            <p class="total">Total Price: $${totalPrice.toFixed(2)}</p>
+
+            <button class="print-btn" onclick="window.print()">Print Invoice</button>
+          </div>
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+  };
 
   return (
     <div className="container">
@@ -215,7 +276,7 @@ const Invoice = () => {
                 <td>
                   <input
                     type="number"
-                    value={product.quantity === 0 ? "" : product.quantity} // This handles the 0 behavior
+                    value={product.quantity === 0 ? "" : product.quantity}
                     onChange={(e) => handleQuantityChange(e, product.id)}
                     placeholder="0"
                   />
@@ -241,7 +302,9 @@ const Invoice = () => {
       <button className="add-row-btn" onClick={handleAddProduct}>
         Add Product
       </button>
-      <button className="summary-btn">View Summary Report</button>
+      <button className="summary-btn" onClick={openSummaryReport}>
+        View Summary Report
+      </button>
     </div>
   );
 };
