@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import "./Invoice.css";
 
 const Invoice = () => {
@@ -18,6 +18,18 @@ const Invoice = () => {
     mobile: "17283333000",
     email: "info@usabd.com",
   });
+
+  // State for invoice date
+  const [invoiceDate, setInvoiceDate] = useState(new Date().toLocaleDateString());
+  
+  // State for entry date
+  const [entryDate, setEntryDate] = useState(new Date().toLocaleDateString());
+
+  // Generate unique invoice number (updated)
+  const [invoiceNumber] = useState("INV-" + new Date().getTime());
+
+  // Generate unique sales order number (updated)
+  const [salesOrderNumber] = useState("REQ-" + new Date().toLocaleDateString().replace(/-/g, "_") + "-" + new Date().getTime());
 
   // Automatically calculate totals whenever 'products' changes
   useEffect(() => {
@@ -96,6 +108,16 @@ const Invoice = () => {
     });
   };
 
+  // Handle invoice date change
+  const handleInvoiceDateChange = (e) => {
+    setInvoiceDate(e.target.value);
+  };
+
+  // Handle entry date change
+  const handleEntryDateChange = (e) => {
+    setEntryDate(e.target.value);
+  };
+
   return (
     <div className="container">
       <header className="header">
@@ -137,10 +159,22 @@ const Invoice = () => {
           </p>
         </div>
         <div>
-          <p><strong>Invoice No.:</strong> 17</p>
-          <p><strong>Invoice Date:</strong> {new Date().toLocaleDateString()}</p>
-          <p><strong>Sales Order No.:</strong> REQ_2018_08_09</p>
-          <p><strong>Entry Date:</strong> 12-Aug-18</p>
+          <p><strong>Invoice No.:</strong> {invoiceNumber}</p>
+          <p><strong>Invoice Date:</strong>
+            <input
+              type="date"
+              value={invoiceDate}
+              onChange={handleInvoiceDateChange}
+            />
+          </p>
+          <p><strong>Sales Order No.:</strong> {salesOrderNumber}</p>
+          <p><strong>Entry Date:</strong>
+            <input
+              type="date"
+              value={entryDate}
+              onChange={handleEntryDateChange}
+            />
+          </p>
         </div>
       </section>
 
