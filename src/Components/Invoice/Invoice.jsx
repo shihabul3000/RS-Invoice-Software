@@ -7,31 +7,24 @@ const Invoice = () => {
   const [showOffer2, setShowOffer2] = useState(false);
   const [showRemoveColumn, setShowRemoveColumn] = useState(false);
   const [products, setProducts] = useState([
-    { id: 1, name: "Product 1", unitPrice: 10, quantity: 1 },
+    { id: 1, name: "Product 1", unitPrice: 0, quantity: 0 },
   ]);
-  const [totalPrice, setTotalPrice] = useState(10);
-  const [totalQuantity, setTotalQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
 
-  // Customer details state
   const [customer, setCustomer] = useState({
     name: "Usa",
     mobile: "17283333000",
     email: "info@usabd.com",
   });
 
-  // State for invoice date
   const [invoiceDate, setInvoiceDate] = useState(new Date().toLocaleDateString());
-  
-  // State for entry date
   const [entryDate, setEntryDate] = useState(new Date().toLocaleDateString());
-
-  // Generate unique invoice number (updated)
   const [invoiceNumber] = useState("INV-" + new Date().getTime());
+  const [salesOrderNumber] = useState(
+    "REQ-" + new Date().toLocaleDateString().replace(/-/g, "_") + "-" + new Date().getTime()
+  );
 
-  // Generate unique sales order number (updated)
-  const [salesOrderNumber] = useState("REQ-" + new Date().toLocaleDateString().replace(/-/g, "_") + "-" + new Date().getTime());
-
-  // Automatically calculate totals whenever 'products' changes
   useEffect(() => {
     let totalQuantity = 0;
     let totalPrice = 0;
@@ -46,9 +39,9 @@ const Invoice = () => {
   const handleAddProduct = () => {
     const newProduct = {
       id: products.length + 1,
-      name: "", // Start with an empty string for the product name
+      name: "",
       unitPrice: 0,
-      quantity: 1,
+      quantity: 0,
     };
     setProducts([...products, newProduct]);
   };
@@ -59,28 +52,28 @@ const Invoice = () => {
   };
 
   const handleQuantityChange = (e, id) => {
+    const value = e.target.value;
+
+    // Update quantity to 0 if empty, or parse it to an integer if a valid number is entered
+    const validValue = value === "" ? 0 : parseInt(value) || 0;
+
     const updatedProducts = products.map((product) =>
-      product.id === id
-        ? { ...product, quantity: parseInt(e.target.value) || 0 }
-        : product
+      product.id === id ? { ...product, quantity: validValue } : product
     );
     setProducts(updatedProducts);
   };
 
   const handleUnitPriceChange = (e, id) => {
+    const value = Math.max(0, parseFloat(e.target.value) || 0);
     const updatedProducts = products.map((product) =>
-      product.id === id
-        ? { ...product, unitPrice: parseFloat(e.target.value) || 0 }
-        : product
+      product.id === id ? { ...product, unitPrice: value } : product
     );
     setProducts(updatedProducts);
   };
 
   const handleProductNameChange = (e, id) => {
     const updatedProducts = products.map((product) =>
-      product.id === id
-        ? { ...product, name: e.target.value }
-        : product
+      product.id === id ? { ...product, name: e.target.value } : product
     );
     setProducts(updatedProducts);
   };
@@ -99,24 +92,13 @@ const Invoice = () => {
     }
   };
 
-  // Handle changes in customer details
   const handleCustomerChange = (e) => {
     const { name, value } = e.target;
-    setCustomer({
-      ...customer,
-      [name]: value,
-    });
+    setCustomer({ ...customer, [name]: value });
   };
 
-  // Handle invoice date change
-  const handleInvoiceDateChange = (e) => {
-    setInvoiceDate(e.target.value);
-  };
-
-  // Handle entry date change
-  const handleEntryDateChange = (e) => {
-    setEntryDate(e.target.value);
-  };
+  const handleInvoiceDateChange = (e) => setInvoiceDate(e.target.value);
+  const handleEntryDateChange = (e) => setEntryDate(e.target.value);
 
   return (
     <div className="container">
@@ -160,7 +142,8 @@ const Invoice = () => {
         </div>
         <div>
           <p><strong>Invoice No.:</strong> {invoiceNumber}</p>
-          <p><strong>Invoice Date:</strong>
+          <p>
+            <strong>Invoice Date:</strong>
             <input
               type="date"
               value={invoiceDate}
@@ -168,7 +151,8 @@ const Invoice = () => {
             />
           </p>
           <p><strong>Sales Order No.:</strong> {salesOrderNumber}</p>
-          <p><strong>Entry Date:</strong>
+          <p>
+            <strong>Entry Date:</strong>
             <input
               type="date"
               value={entryDate}
@@ -190,7 +174,6 @@ const Invoice = () => {
         <button className="remove-btn" onClick={toggleRemoveColumn}>Remove Product</button>
       </section>
 
-      {/* Table Content */}
       <div className="table-section">
         <table className="invoice-table">
           <thead>
@@ -224,15 +207,17 @@ const Invoice = () => {
                 <td>
                   <input
                     type="number"
-                    value={product.unitPrice}
+                    value={product.unitPrice === 0 ? "" : product.unitPrice}
+                    placeholder="0"
                     onChange={(e) => handleUnitPriceChange(e, product.id)}
                   />
                 </td>
                 <td>
                   <input
                     type="number"
-                    value={product.quantity}
+                    value={product.quantity === 0 ? "" : product.quantity} // This handles the 0 behavior
                     onChange={(e) => handleQuantityChange(e, product.id)}
+                    placeholder="0"
                   />
                 </td>
                 {showSale && <td>Sale Content</td>}
