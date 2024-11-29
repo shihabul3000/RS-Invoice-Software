@@ -12,6 +12,13 @@ const Invoice = () => {
   const [totalPrice, setTotalPrice] = useState(10);
   const [totalQuantity, setTotalQuantity] = useState(1);
 
+  // Customer details state
+  const [customer, setCustomer] = useState({
+    name: "Usa",
+    mobile: "17283333000",
+    email: "info@usabd.com",
+  });
+
   // Automatically calculate totals whenever 'products' changes
   useEffect(() => {
     let totalQuantity = 0;
@@ -71,6 +78,15 @@ const Invoice = () => {
     }
   };
 
+  // Handle changes in customer details
+  const handleCustomerChange = (e) => {
+    const { name, value } = e.target;
+    setCustomer({
+      ...customer,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="container">
       <header className="header">
@@ -80,10 +96,36 @@ const Invoice = () => {
 
       <section className="customer-details">
         <div>
-          <p><strong>Customer`s Name:</strong> Usa</p>
-          <p><strong>Mobile No:</strong> 17283333000</p>
-          <p><strong>Email:</strong> info@usabd.com</p>
-          <p><strong>Address:</strong> Motaleb Plaza, Dhaka, Bangladesh</p>
+          <p>
+            <strong>Customer`s Name:</strong>
+            <input
+              type="text"
+              name="name"
+              value={customer.name}
+              onChange={handleCustomerChange}
+            />
+          </p>
+          <p>
+            <strong>Mobile No:</strong>
+            <input
+              type="text"
+              name="mobile"
+              value={customer.mobile}
+              onChange={handleCustomerChange}
+            />
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <input
+              type="email"
+              name="email"
+              value={customer.email}
+              onChange={handleCustomerChange}
+            />
+          </p>
+          <p>
+            <strong>Address:</strong> Motaleb Plaza, Dhaka, Bangladesh
+          </p>
         </div>
         <div>
           <p><strong>Invoice No.:</strong> 17</p>
