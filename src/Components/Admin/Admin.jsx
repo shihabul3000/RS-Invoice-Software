@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import './Admin.css';
-import { useNavigate } from 'react-router-dom';
+
 
 const Admin = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (username === 'admin' && password === 'admin') {
-      navigate('/admin'); // Navigates to the admin page
+      // Open the admin page in a new tab
+      window.open('/admin', '_blank'); 
       setShowLogin(false); // Close the login modal
     } else {
       alert('Incorrect username or password');
