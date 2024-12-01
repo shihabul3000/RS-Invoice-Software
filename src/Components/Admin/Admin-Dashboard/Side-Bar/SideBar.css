@@ -9,26 +9,38 @@
   flex-direction: column;
   justify-content: space-between;
   border-right: 1px solid #e5e5e5;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar.collapsed {
+  width: 80px; /* Collapsed width */
 }
 
 /* Logo */
 .logo {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  cursor: pointer;
   margin-bottom: 30px;
 }
 
 .logoImage {
   width: 40px;
   height: auto;
-  margin-bottom: 5px;
+  margin-right: 10px;
 }
 
 .logoText {
   font-size: 18px;
   font-weight: bold;
   color: #3a36db;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .logoText {
+  opacity: 0; /* Hide logo text when collapsed */
+  width: 0;
+  overflow: hidden;
 }
 
 /* Menu */
@@ -56,6 +68,14 @@
   font-weight: 500;
   color: #3a36db;
   margin-left: 10px;
+  transition: opacity 0.3s ease, margin-left 0.3s ease;
+}
+
+.sidebar.collapsed .menuText {
+  opacity: 0;
+  margin-left: 0;
+  width: 0;
+  overflow: hidden;
 }
 
 .icon {
@@ -63,6 +83,7 @@
   color: #3a36db;
 }
 
+/* Notification Badge */
 .notificationBadge {
   background-color: #ff3366;
   color: #fff;
@@ -74,31 +95,17 @@
   right: 15px;
 }
 
-/* Upgrade Section */
-/* .upgrade {
-  background-color: #ffe6f2;
-  border-radius: 10px;
-  padding: 15px;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.upgradeContent {
-  font-size: 16px;
-  font-weight: 600;
-  color: #ff3366;
-  cursor: pointer;
-  transition: all 0.3s ease;
-} */
-
-/* .upgradeContent:hover {
-  color: #ff6699;
-} */
-
 /* Logout Section */
 .logout {
   display: flex;
   align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .logout {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
 
 .profileImage {
@@ -144,7 +151,6 @@
     padding: 5px;
   }
 
-  .upgrade,
   .logout {
     display: none;
   }
