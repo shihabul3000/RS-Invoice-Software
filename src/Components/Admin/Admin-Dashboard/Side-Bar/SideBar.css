@@ -1,121 +1,151 @@
 /* Sidebar Container */
 .sidebar {
-    width: 220px;
-    height: 100vh;
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  /* Logo */
-  .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .logoImage {
-    width: 42px;
-    height: 26px;
-    margin-right: 10px;
-  }
-  
-  .logoText {
-    font-size: 22px;
-    font-weight: 700;
-    color: #3a36db;
-  }
-  
-  /* Menu */
-  .menu {
-    margin-bottom: 50px;
-  }
-  
-  .menuItem {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  width: 240px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #e5e5e5;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logoImage {
+  width: 40px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: bold;
+  color: #3a36db;
+}
+
+/* Menu */
+.menu {
+  margin-bottom: 50px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menuItem:hover {
+  background-color: #f5f9ff;
+}
+
+.menuText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #3a36db;
+  margin-left: 10px;
+}
+
+.icon {
+  font-size: 20px;
+  color: #3a36db;
+}
+
+.notificationBadge {
+  background-color: #ff3366;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 7px;
+  border-radius: 12px;
+  position: absolute;
+  right: 15px;
+}
+
+/* Upgrade Section */
+/* .upgrade {
+  background-color: #ffe6f2;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.upgradeContent {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff3366;
+  cursor: pointer;
+  transition: all 0.3s ease;
+} */
+
+/* .upgradeContent:hover {
+  color: #ff6699;
+} */
+
+/* Logout Section */
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+.profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.logoutText {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #06152b;
+}
+
+.accountType {
+  font-size: 12px;
+  color: #788b9a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
     padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
   }
-  
-  .menuItem:hover {
-    background-color: #f0f8ff; /* Light blue on hover */
+
+  .menu {
+    flex-direction: row;
+    overflow-x: auto;
   }
-  
-  .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+
+  .menuItem {
+    margin-bottom: 0;
+    padding: 5px;
   }
-  
-  .menuText {
-    font-size: 16px;
-    font-weight: 500;
-    color: #3a36db; /* Blue text for menu items */
-  }
-  
-  /* Logout Section */
+
+  .upgrade,
   .logout {
-    display: flex;
-    align-items: center;
+    display: none;
   }
-  
-  .profileImage {
-    width: 45px;
-    height: 43px;
-    margin-right: 10px;
-  }
-  
-  .logoutText {
-    flex-grow: 1;
-  }
-  
-  .name {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    color: #06152b;
-  }
-  
-  .accountType {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    color: #788b9a;
-  }
-  
-  .logoutIcon {
-    width: 17px;
-    height: 16px;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      flex-direction: row;
-      overflow-x: auto;
-    }
-  
-    .menu {
-      flex-direction: row;
-      overflow-x: auto;
-    }
-  
-    .menuItem {
-      margin-bottom: 0;
-      margin-right: 10px;
-    }
-  
-    .logout {
-      display: none;
-    }
-  }
-  
+}
