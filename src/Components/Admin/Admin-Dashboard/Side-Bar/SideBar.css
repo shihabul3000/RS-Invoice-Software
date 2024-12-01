@@ -1,0 +1,121 @@
+/* Sidebar Container */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .logoImage {
+    width: 42px;
+    height: 26px;
+    margin-right: 10px;
+  }
+  
+  .logoText {
+    font-size: 22px;
+    font-weight: 700;
+    color: #3a36db;
+  }
+  
+  /* Menu */
+  .menu {
+    margin-bottom: 50px;
+  }
+  
+  .menuItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menuItem:hover {
+    background-color: #f0f8ff; /* Light blue on hover */
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .menuText {
+    font-size: 16px;
+    font-weight: 500;
+    color: #3a36db; /* Blue text for menu items */
+  }
+  
+  /* Logout Section */
+  .logout {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileImage {
+    width: 45px;
+    height: 43px;
+    margin-right: 10px;
+  }
+  
+  .logoutText {
+    flex-grow: 1;
+  }
+  
+  .name {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #06152b;
+  }
+  
+  .accountType {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #788b9a;
+  }
+  
+  .logoutIcon {
+    width: 17px;
+    height: 16px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      flex-direction: row;
+      overflow-x: auto;
+    }
+  
+    .menu {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+  
+    .menuItem {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+  
+    .logout {
+      display: none;
+    }
+  }
+  
