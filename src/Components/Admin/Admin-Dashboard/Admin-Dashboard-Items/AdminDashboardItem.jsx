@@ -5,7 +5,7 @@ const AdminDashboardItem = () => {
   return (
     <div style={styles.app}>
       <SideBar />
-      <Dashboard />
+       <Dashboard /> 
     </div>
   );
 };
@@ -13,7 +13,7 @@ const AdminDashboardItem = () => {
 const styles = {
   app: {
     display: 'flex',
-    backgroundColor: '#f1f4fa',
+    // backgroundColor: '#f1f4fa',
     height: '100vh',
   },
 };

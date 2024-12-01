@@ -99,7 +99,7 @@ function Dashboard() {
                 <div className="card">
                     <FaUser className="icon" />
                     <span className="cardNumber">12+</span>
-                    <span className="cardName">Job Applications</span>
+                    <span className="cardName">Unite Price Selection</span>
                 </div>
             </div>
 
