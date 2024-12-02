@@ -1,4 +1,5 @@
-import  { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './SideBar.css';
 import {
   FaTachometerAlt,
@@ -19,7 +20,7 @@ const SideBar = () => {
   };
 
   const menuItems = [
-    { name: 'Dashboard', icon: <FaTachometerAlt />, notifications: false },
+    { name: 'Dashboard', icon: <FaTachometerAlt />, notifications: false, path: '/dashboard' },
     { name: 'Analytics', icon: <FaChartLine />, notifications: false },
     { name: 'Invoice', icon: <FaFileInvoice />, notifications: false },
     { name: 'Schedule', icon: <FaCalendarAlt />, notifications: false },
@@ -42,10 +43,19 @@ const SideBar = () => {
       <div className="menu">
         {menuItems.map((item, index) => (
           <div key={index} className="menuItem">
-            <span className="icon">{item.icon}</span>
-            {!isCollapsed && <span className="menuText">{item.name}</span>}
-            {item.notifications && !isCollapsed && (
-              <span className="notificationBadge">49</span>
+            {item.path ? (
+              <Link to={item.path} className="menuLink">
+                <span className="icon">{item.icon}</span>
+                {!isCollapsed && <span className="menuText">{item.name}</span>}
+                {item.notifications && !isCollapsed && (
+                  <span className="notificationBadge">49</span>
+                )}
+              </Link>
+            ) : (
+              <div className="menuItem">
+                <span className="icon">{item.icon}</span>
+                {!isCollapsed && <span className="menuText">{item.name}</span>}
+              </div>
             )}
           </div>
         ))}
