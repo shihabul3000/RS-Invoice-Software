@@ -25,3 +25,177 @@
     font-size: 16px;
   }
   
+  .filters {
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .dropdown-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-btn:hover .dropdown-content {
+    display: block;
+  }
+  
+  .remove-btn {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  
+  .remove-btn:hover {
+    background-color: #e60000;
+  }
+  
+  .table-section {
+    margin-top: 20px;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .invoice-table th,
+  .invoice-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .invoice-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .totals {
+    margin-top: 20px;
+  }
+  
+  .total-quantity,
+  .total-price {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .add-row-btn,
+  .summary-btn {
+    background-color: #3a36db;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .add-row-btn:hover,
+  .summary-btn:hover {
+    background-color: #2e2a9e;
+  }
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .filters {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .filters .dropdown-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .filters .remove-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .table-section {
+    margin-bottom: 20px;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .invoice-table th,
+  .invoice-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .invoice-table input {
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .summary-section {
+    margin-top: 20px;
+  }
+  
+  .summary-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .add-btn {
+    background-color: #008cba;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
