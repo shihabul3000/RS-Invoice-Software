@@ -110,6 +110,9 @@ const SideBarDashboardIcon = () => {
                   <th>Product</th>
                   <th>Unit Price</th>
                   <th>Quantity</th>
+                  ${showSale ? '<th>Sale</th>' : ''}
+                  ${showOffer1 ? '<th>Offer 1</th>' : ''}
+                  ${showOffer2 ? '<th>Offer 2</th>' : ''}
                   <th>Total</th>
                 </tr>
               </thead>
@@ -121,6 +124,9 @@ const SideBarDashboardIcon = () => {
                       <td>${product.name}</td>
                       <td>${product.unitPrice}</td>
                       <td>${product.quantity}</td>
+                      ${showSale ? '<td>Sale Content</td>' : ''}
+                      ${showOffer1 ? '<td>Offer 1 Content</td>' : ''}
+                      ${showOffer2 ? '<td>Offer 2 Content</td>' : ''}
                       <td>${(product.unitPrice * product.quantity).toFixed(2)}</td>
                     </tr>`
                   )
@@ -205,11 +211,11 @@ const SideBarDashboardIcon = () => {
                     />
                   </td>
                   <td>
-                    <input
+                  <input
                       type="number"
                       value={product.quantity === 0 ? '' : product.quantity}
-                      onChange={(e) => handleQuantityChange(e, product.id)}
                       placeholder="0"
+                      onChange={(e) => handleQuantityChange(e, product.id)}
                     />
                   </td>
                   {showSale && <td>Sale Content</td>}
@@ -220,25 +226,26 @@ const SideBarDashboardIcon = () => {
               ))}
             </tbody>
           </table>
-          <div className="totals">
-            <div className="total-quantity">
-              <strong>Total Quantity: </strong>{totalQuantity}
-            </div>
-            <div className="total-price">
-              <strong>Total Price: </strong>${totalPrice.toFixed(2)}
-            </div>
-          </div>
+          <button className="add-product-btn" onClick={handleAddProduct}>
+            Add Product
+          </button>
         </div>
 
-        <button className="add-row-btn" onClick={handleAddProduct}>
-          Add Product
-        </button>
-        <button className="summary-btn" onClick={openSummaryReport}>
-          View Summary Report
-        </button>
+        <section className="summary-section">
+          <h2>Total</h2>
+          <p>Total Quantity: {totalQuantity}</p>
+          <p>Total Price: ${totalPrice.toFixed(2)}</p>
+        </section>
+
+        <div className="action-buttons">
+          <button className="summary-btn" onClick={openSummaryReport}>
+            View Summary Report
+          </button>
+        </div>
       </div>
     </>
   );
 };
 
 export default SideBarDashboardIcon;
+
