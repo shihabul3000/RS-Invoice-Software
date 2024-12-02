@@ -12,8 +12,7 @@ const AdminPage = () => {
 
   return (
     <div className="admin-page">
-      <h2>Admin Dashboard</h2>
-      <p>Welcome to the Admin Dashboard!</p>
+      
       
       {/* Logout Button */}
       <button className="logout-btn" onClick={handleLogout}>Logout</button>
