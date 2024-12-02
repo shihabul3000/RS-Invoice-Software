@@ -19,18 +19,7 @@ const [showSale, setShowSale] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
 
-  const [customer, setCustomer] = useState({
-    name: "Usa",
-    mobile: "17283333000",
-    email: "info@usabd.com",
-  });
 
-  const [invoiceDate, setInvoiceDate] = useState(new Date().toLocaleDateString());
-  const [entryDate, setEntryDate] = useState(new Date().toLocaleDateString());
-  const [invoiceNumber] = useState("INV-" + new Date().getTime());
-  const [salesOrderNumber] = useState(
-    "REQ-" + new Date().toLocaleDateString().replace(/-/g, "_") + "-" + new Date().getTime()
-  );
 
   useEffect(() => {
     let totalQuantity = 0;
@@ -96,13 +85,6 @@ const [showSale, setShowSale] = useState(false);
     }
   };
 
-  const handleCustomerChange = (e) => {
-    const { name, value } = e.target;
-    setCustomer({ ...customer, [name]: value });
-  };
-
-  const handleInvoiceDateChange = (e) => setInvoiceDate(e.target.value);
-  const handleEntryDateChange = (e) => setEntryDate(e.target.value);
 
   const openSummaryReport = () => {
     const newWindow = window.open("", "_blank");
@@ -125,13 +107,7 @@ const [showSale, setShowSale] = useState(false);
         <body>
           <div class="summary">
             <h2>Invoice Summary</h2>
-            <p><strong>Customer Name:</strong> ${customer.name}</p>
-            <p><strong>Mobile:</strong> ${customer.mobile}</p>
-            <p><strong>Email:</strong> ${customer.email}</p>
-            <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
-            <p><strong>Invoice Date:</strong> ${invoiceDate}</p>
-            <p><strong>Sales Order Number:</strong> ${salesOrderNumber}</p>
-            <p><strong>Entry Date:</strong> ${entryDate}</p>
+          
             
             <table class="invoice-table">
               <thead>
@@ -183,66 +159,13 @@ const [showSale, setShowSale] = useState(false);
     <div className="container">
       <header className="header">
         <h1>INVOICE</h1>
-        <p>23/D/1 (1st Floor), Free School Street, Dhaka</p>
+        
       </header>
 
 
 
 
-      <section className="customer-details">
-        <div>
-          <p>
-            <strong>Customer`s Name:</strong>
-            <input
-              type="text"
-              name="name"
-              value={customer.name}
-              onChange={handleCustomerChange}
-            />
-          </p>
-          <p>
-            <strong>Mobile No:</strong>
-            <input
-              type="text"
-              name="mobile"
-              value={customer.mobile}
-              onChange={handleCustomerChange}
-            />
-          </p>
-          <p>
-            <strong>Email:</strong>
-            <input
-              type="email"
-              name="email"
-              value={customer.email}
-              onChange={handleCustomerChange}
-            />
-          </p>
-          <p>
-            <strong>Address:</strong> Motaleb Plaza, Dhaka, Bangladesh
-          </p>
-        </div>
-        <div>
-          <p><strong>Invoice No.:</strong> {invoiceNumber}</p>
-          <p>
-            <strong>Invoice Date:</strong>
-            <input
-              type="date"
-              value={invoiceDate}
-              onChange={handleInvoiceDateChange}
-            />
-          </p>
-          <p><strong>Sales Order No.:</strong> {salesOrderNumber}</p>
-          <p>
-            <strong>Entry Date:</strong>
-            <input
-              type="date"
-              value={entryDate}
-              onChange={handleEntryDateChange}
-            />
-          </p>
-        </div>
-      </section>
+     
 
       <section className="filters">
         <button className="dropdown-btn">
@@ -328,13 +251,6 @@ const [showSale, setShowSale] = useState(false);
       </button>
     </div>
 
-
-
-        
-        
-        
-        
-        
         
         </>
     );
